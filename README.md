@@ -30,4 +30,26 @@ A GitHub repository where the code (including the Jenkinsfile) will be stored.
 Jenkins configured with access to this GitHub repository.
 
 
+Steps
 
+1. Create a GitHub Repository
+
+Create a new repository on GitHub.
+Create a Python application along with the Dockerfile to this repository.
+Create deployment and service K8s file to this repository
+Create a Jenkinsfile in the root of this repository for the declarative pipeline.
+
+2. Create the Jenkins Pipeline that do:
+   
+   Checkout Repository: Checkout the GitHub repository.(can change it to clone if need)
+   Build Docker Image: Builds the Docker image from the Dockerfile.
+   Deploy to Kubernetes: Creates a Kubernetes deployment and service from the Docker image.
+   Expose Service: Exposes the service on port 443.
+
+Verify Deployment
+
+After the pipeline runs successfully, verify the deployment:
+
+Check the Kubernetes cluster using kubectl get pods -n homework to ensure the pods are running.
+Use kubectl get services -n homework to check the external IP address assigned to the service.
+Access the Python application using the external IP over HTTPS.
