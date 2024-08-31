@@ -53,3 +53,6 @@ After the pipeline runs successfully, verify the deployment:
 Check the Kubernetes cluster using kubectl get pods -n homework to ensure the pods are running.
 Use kubectl get services -n homework to check the external IP address assigned to the service.
 Access the Python application using the external IP over HTTPS.
+
+
+![jenkins-pipeline](https://github.com/user-attachments/assets/868f7afa-2f5d-4d37-9a25-921d0202835d)
