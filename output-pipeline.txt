@@ -1,0 +1,234 @@
+Started by user josh
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/project
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/project/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/jehoshu/Leumi-project.git # timeout=10
+Fetching upstream changes from https://github.com/jehoshu/Leumi-project.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.39.2'
+ > git fetch --tags --force --progress -- https://github.com/jehoshu/Leumi-project.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 2f646d4aa3cc0cf24fd8dc626b91fb6e8b98c71a (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 2f646d4aa3cc0cf24fd8dc626b91fb6e8b98c71a # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main 2f646d4aa3cc0cf24fd8dc626b91fb6e8b98c71a # timeout=10
+Commit message: "Create requirements.txt"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker Image)
+[Pipeline] sh
++ ls -la
+total 40
+drwxr-xr-x 3 root    root    4096 Aug 31 16:12 .
+drwxr-xr-x 7 jenkins jenkins 4096 Aug 31 14:17 ..
+drwxr-xr-x 8 root    root    4096 Aug 31 16:12 .git
+-rw-r--r-- 1 root    root     229 Aug 31 15:30 Dockerfile
+-rw-r--r-- 1 root    root    1645 Aug 31 16:12 Jenkinsfile
+-rw-r--r-- 1 root    root    1952 Aug 31 16:12 README.md
+-rw-r--r-- 1 root    root      61 Aug 31 06:03 app.py
+-rw-r--r-- 1 root    root     344 Aug 31 16:12 k8s-deployment.yaml
+-rw-r--r-- 1 root    root     199 Aug 31 16:12 k8s-service.yaml
+-rw-r--r-- 1 root    root      74 Aug 31 16:12 requirements.txt
+[Pipeline] sh
++ docker build -t leumi .
+#1 [internal] load build definition from Dockerfile
+#1 sha256:ebfbe5f2b0fc3fa6e5ecf06f1ccc92e84f275b9b6098e70df17f41b9707048ec
+#1 transferring dockerfile: 268B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.11-slim
+#2 sha256:7fd88e7eb08a3ac0de427c694acb0199f4ed840466682c40d68abccca25d73ae
+#2 DONE 1.2s
+
+#3 [internal] load .dockerignore
+#3 sha256:971b0af2f28ade97869d1f372fefc790f456114ee1c17d607c9af853aca1d4e9
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#7 [1/6] FROM docker.io/library/python:3.11-slim@sha256:ad5dadd957a398226996bc4846e522c39f2a77340b531b28aaab85b2d361210b
+#7 sha256:caabfd09324551217069c6a76492053611da0f828ed2c80ef2291f1c30c70937
+#7 DONE 0.0s
+
+#5 [internal] load build context
+#5 sha256:2da46a01d382073cba2c9f1e950b10564ada2c703d748240151c257ff36e105f
+#5 transferring context: 57.35kB 0.0s done
+#5 DONE 0.1s
+
+#6 [2/6] WORKDIR /app
+#6 sha256:41d5b235250f91c39d534ec6c0c081d58b0b3afb739c075f70335ec403acd86b
+#6 CACHED
+
+#4 [3/6] COPY requirements.txt .
+#4 sha256:eebcdec53ab4317eec5ee30591fa2a89f22162d4999d401c1dc9229b84958845
+#4 DONE 0.1s
+
+#10 [4/6] RUN pip install --upgrade pip setuptools wheel
+#10 sha256:9d89a031bbf3bc4387ba19e84b5d44fbe5887b4de7141467b36ec6b7494998b4
+#10 2.119 Requirement already satisfied: pip in /usr/local/lib/python3.11/site-packages (24.0)
+#10 2.405 Collecting pip
+#10 2.683   Downloading pip-24.2-py3-none-any.whl.metadata (3.6 kB)
+#10 2.696 Requirement already satisfied: setuptools in /usr/local/lib/python3.11/site-packages (65.5.1)
+#10 2.996 Collecting setuptools
+#10 3.046   Downloading setuptools-74.0.0-py3-none-any.whl.metadata (6.7 kB)
+#10 3.062 Requirement already satisfied: wheel in /usr/local/lib/python3.11/site-packages (0.44.0)
+#10 3.235 Downloading pip-24.2-py3-none-any.whl (1.8 MB)
+#10 3.512    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 6.8 MB/s eta 0:00:00
+#10 3.563 Downloading setuptools-74.0.0-py3-none-any.whl (1.3 MB)
+#10 3.630    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 20.7 MB/s eta 0:00:00
+#10 3.756 Installing collected packages: setuptools, pip
+#10 3.756   Attempting uninstall: setuptools
+#10 3.759     Found existing installation: setuptools 65.5.1
+#10 3.783     Uninstalling setuptools-65.5.1:
+#10 3.890       Successfully uninstalled setuptools-65.5.1
+#10 4.654   Attempting uninstall: pip
+#10 4.658     Found existing installation: pip 24.0
+#10 4.693     Uninstalling pip-24.0:
+#10 4.921       Successfully uninstalled pip-24.0
+#10 5.787 Successfully installed pip-24.2 setuptools-74.0.0
+#10 5.788 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#10 DONE 6.3s
+
+#9 [5/6] RUN pip install -r requirements.txt
+#9 sha256:2b5ffc27f116c4007223d742d028c417462a59813199185a62e5180a548f900f
+#9 1.112 Collecting setuptools<60.0 (from -r requirements.txt (line 1))
+#9 1.307   Downloading setuptools-59.8.0-py3-none-any.whl.metadata (5.0 kB)
+#9 1.703 Collecting numpy==1.25.0 (from -r requirements.txt (line 2))
+#9 1.757   Downloading numpy-1.25.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.6 kB)
+#9 1.961 Collecting pandas==2.1.0 (from -r requirements.txt (line 3))
+#9 2.013   Downloading pandas-2.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (18 kB)
+#9 2.143 Collecting requests==2.31.0 (from -r requirements.txt (line 4))
+#9 2.251   Downloading requests-2.31.0-py3-none-any.whl.metadata (4.6 kB)
+#9 2.338 Collecting flask==3.0.0 (from -r requirements.txt (line 5))
+#9 2.389   Downloading flask-3.0.0-py3-none-any.whl.metadata (3.6 kB)
+#9 2.475 Collecting python-dateutil>=2.8.2 (from pandas==2.1.0->-r requirements.txt (line 3))
+#9 2.526   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+#9 2.645 Collecting pytz>=2020.1 (from pandas==2.1.0->-r requirements.txt (line 3))
+#9 2.696   Downloading pytz-2024.1-py2.py3-none-any.whl.metadata (22 kB)
+#9 2.786 Collecting tzdata>=2022.1 (from pandas==2.1.0->-r requirements.txt (line 3))
+#9 2.837   Downloading tzdata-2024.1-py2.py3-none-any.whl.metadata (1.4 kB)
+#9 2.976 Collecting charset-normalizer<4,>=2 (from requests==2.31.0->-r requirements.txt (line 4))
+#9 3.029   Downloading charset_normalizer-3.3.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (33 kB)
+#9 3.124 Collecting idna<4,>=2.5 (from requests==2.31.0->-r requirements.txt (line 4))
+#9 3.176   Downloading idna-3.8-py3-none-any.whl.metadata (9.9 kB)
+#9 3.287 Collecting urllib3<3,>=1.21.1 (from requests==2.31.0->-r requirements.txt (line 4))
+#9 3.339   Downloading urllib3-2.2.2-py3-none-any.whl.metadata (6.4 kB)
+#9 3.453 Collecting certifi>=2017.4.17 (from requests==2.31.0->-r requirements.txt (line 4))
+#9 3.505   Downloading certifi-2024.8.30-py3-none-any.whl.metadata (2.2 kB)
+#9 3.597 Collecting Werkzeug>=3.0.0 (from flask==3.0.0->-r requirements.txt (line 5))
+#9 3.650   Downloading werkzeug-3.0.4-py3-none-any.whl.metadata (3.7 kB)
+#9 3.733 Collecting Jinja2>=3.1.2 (from flask==3.0.0->-r requirements.txt (line 5))
+#9 3.785   Downloading jinja2-3.1.4-py3-none-any.whl.metadata (2.6 kB)
+#9 3.864 Collecting itsdangerous>=2.1.2 (from flask==3.0.0->-r requirements.txt (line 5))
+#9 3.921   Downloading itsdangerous-2.2.0-py3-none-any.whl.metadata (1.9 kB)
+#9 4.012 Collecting click>=8.1.3 (from flask==3.0.0->-r requirements.txt (line 5))
+#9 4.084   Downloading click-8.1.7-py3-none-any.whl.metadata (3.0 kB)
+#9 4.161 Collecting blinker>=1.6.2 (from flask==3.0.0->-r requirements.txt (line 5))
+#9 4.259   Downloading blinker-1.8.2-py3-none-any.whl.metadata (1.6 kB)
+#9 4.382 Collecting MarkupSafe>=2.0 (from Jinja2>=3.1.2->flask==3.0.0->-r requirements.txt (line 5))
+#9 4.434   Downloading MarkupSafe-2.1.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.0 kB)
+#9 4.506 Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas==2.1.0->-r requirements.txt (line 3))
+#9 4.557   Downloading six-1.16.0-py2.py3-none-any.whl.metadata (1.8 kB)
+#9 4.766 Downloading numpy-1.25.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.6 MB)
+#9 7.799    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 17.6/17.6 MB 6.0 MB/s eta 0:00:00
+#9 7.962 Downloading pandas-2.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.6 MB)
+#9 9.958    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.6/12.6 MB 6.4 MB/s eta 0:00:00
+#9 10.01 Downloading requests-2.31.0-py3-none-any.whl (62 kB)
+#9 10.08 Downloading flask-3.0.0-py3-none-any.whl (99 kB)
+#9 10.22 Downloading setuptools-59.8.0-py3-none-any.whl (952 kB)
+#9 10.28    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 952.8/952.8 kB 16.2 MB/s eta 0:00:00
+#9 10.33 Downloading blinker-1.8.2-py3-none-any.whl (9.5 kB)
+#9 10.39 Downloading certifi-2024.8.30-py3-none-any.whl (167 kB)
+#9 10.46 Downloading charset_normalizer-3.3.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (140 kB)
+#9 10.53 Downloading click-8.1.7-py3-none-any.whl (97 kB)
+#9 10.60 Downloading idna-3.8-py3-none-any.whl (66 kB)
+#9 10.67 Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+#9 10.73 Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
+#9 10.80 Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+#9 10.89 Downloading pytz-2024.1-py2.py3-none-any.whl (505 kB)
+#9 10.98 Downloading tzdata-2024.1-py2.py3-none-any.whl (345 kB)
+#9 11.06 Downloading urllib3-2.2.2-py3-none-any.whl (121 kB)
+#9 11.13 Downloading werkzeug-3.0.4-py3-none-any.whl (227 kB)
+#9 11.21 Downloading MarkupSafe-2.1.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (28 kB)
+#9 11.27 Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+#9 11.43 Installing collected packages: pytz, urllib3, tzdata, six, setuptools, numpy, MarkupSafe, itsdangerous, idna, click, charset-normalizer, certifi, blinker, Werkzeug, requests, python-dateutil, Jinja2, pandas, flask
+#9 11.75   Attempting uninstall: setuptools
+#9 11.75     Found existing installation: setuptools 74.0.0
+#9 11.81     Uninstalling setuptools-74.0.0:
+#9 12.10       Successfully uninstalled setuptools-74.0.0
+#9 19.25 Successfully installed Jinja2-3.1.4 MarkupSafe-2.1.5 Werkzeug-3.0.4 blinker-1.8.2 certifi-2024.8.30 charset-normalizer-3.3.2 click-8.1.7 flask-3.0.0 idna-3.8 itsdangerous-2.2.0 numpy-1.25.0 pandas-2.1.0 python-dateutil-2.9.0.post0 pytz-2024.1 requests-2.31.0 setuptools-59.8.0 six-1.16.0 tzdata-2024.1 urllib3-2.2.2
+#9 19.25 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#9 DONE 19.8s
+
+#8 [6/6] COPY . .
+#8 sha256:269cdd9eb69978387e19d77e17bbea944edb2b3a93aef71f622b68c3e68a1381
+#8 DONE 0.1s
+
+#11 exporting to image
+#11 sha256:19c09347092441bbc89685777484a6ada7693dabf32f6d4506a672d7eed53c76
+#11 exporting layers
+#11 exporting layers 1.1s done
+#11 writing image sha256:934f57587492d714f6395069d94a39125948b03dfa956f1c512bc26c535c0481 done
+#11 naming to docker.io/library/leumi:latest done
+#11 DONE 1.1s
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run Docker Image)
+[Pipeline] sh
++ docker run -d -p 443:443 leumi
+5cb5ca0eb032e1448f9d24ddb68ccbbd3f720718265ff5a70129e4a1d5140cdb
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to Kubernetes)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ kubectl apply -f k8s-deployment.yaml --namespace=homework
+deployment.apps/josh-deployment unchanged
++ kubectl apply -f k8s-service.yaml --namespace=homework
+service/josh-service unchanged
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ docker container prune -f
+Deleted Containers:
+5cb5ca0eb032e1448f9d24ddb68ccbbd3f720718265ff5a70129e4a1d5140cdb
+
+Total reclaimed space: 0B
+[Pipeline] sh
++ docker image prune -f
+Deleted Images:
+deleted: sha256:3be9b94767fa7f55ecc852e2f7ecb66d1c4d36ecf7ad09d4ae0d65e600881a16
+
+Total reclaimed space: 0B
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
